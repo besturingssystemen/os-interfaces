@@ -1,14 +1,13 @@
 In deze oefenzitting leren jullie het besturingssysteem xv6 kennen.
 
 - [Voorbereiding](#voorbereiding)
-- [Eerste kennismaking](#eerste-kennismaking)
-  - [xv6 shell](#xv6-shell)
-  - [User space programma bekijken](#user-space-programma-bekijken)
-    - [Libraries](#libraries)
-    - [Programma afsluiten](#programma-afsluiten)
-  - [Eigen user space programma toevoegen](#eigen-user-space-programma-toevoegen)
-  - [Zelfreflecterend proces](#zelfreflecterend-proces)
-  - [Communicerende processen](#communicerende-processen)
+- [xv6 shell](#xv6-shell)
+- [User space programma bekijken](#user-space-programma-bekijken)
+  - [Libraries](#libraries)
+  - [Programma afsluiten](#programma-afsluiten)
+- [Eigen user space programma toevoegen](#eigen-user-space-programma-toevoegen)
+- [Zelfreflecterend proces](#zelfreflecterend-proces)
+- [Communicerende processen](#communicerende-processen)
 
 # Voorbereiding
 
@@ -17,9 +16,7 @@ Ter voorbereiding van deze oefenzitting wordt je verwacht:
 * Een werkende versie van xv6-riscv te hebben. Volg [deze tutorial](https://github.com/besturingssystemen/klaarzetten-werkomgeving) voor meer uitleg.
 * Hoofdstuk 1 van het [xv6 boek](https://github.com/mit-pdos/xv6-riscv-book/) gelezen te hebben.
 
-# Eerste kennismaking
-
-## xv6 shell
+# xv6 shell
 
 Wanneer je xv6 start beland je in een simpele shell-omgeving.
 
@@ -62,7 +59,7 @@ De shell van xv6 (het programma `sh`) heeft geen `$PATH`-variabele en zoekt dus 
     ```
 
 
-## User space programma bekijken
+# User space programma bekijken
 
 De broncode van de user space programma's die we net hebben uitgevoerd staat in de folder `xv6-riscv/user` in je Git-repository.
 
@@ -72,7 +69,7 @@ De broncode van de user space programma's die we net hebben uitgevoerd staat in 
   gedit xv6-riscv/user/ls.c
   ```
 
-### Libraries
+## Libraries
 De libraries die je kan terugvinden in de `#include`-statements zijn niet de standaard libraries die we kennen wanneer we C programmeren.
 
 > :info: De [C Standard Library](https://en.wikipedia.org/wiki/C_standard_library) is een verzameling nuttige functies die door C-programma's gebruikt kunnen worden. De implementatie van deze functies hangt echter af van het onderliggende besturingssysteem. Op Ubuntu en vele andere Unix-distributies heet deze implementatie `glibc` of [The GNU C Library](https://www.gnu.org/software/libc/). Een andere populaire implementatie heet [`musl`](https://musl.libc.org/).
@@ -95,11 +92,11 @@ De functies in `user/user.h` maken zelf gebruik van types gedefinieerd in `kerne
 #include "kernel/types.h"
 #include "user/user.h"
 ```
-### Programma afsluiten
+## Programma afsluiten
 
 Merk op dat in xv6 een user space programma afgesloten wordt door de oproep ```exit(0);``` in plaats van te returnen uit main. Ook dit is het gevolg van het feit dat xv6 geen standaard C library aanbiedt. Kijk [hier](https://stackoverflow.com/questions/3463551/what-is-the-difference-between-exit-and-return) voor meer informatie.
 
-## Eigen user space programma toevoegen
+# Eigen user space programma toevoegen
 
 We zijn klaar om een simpel user space programma toe te voegen aan xv6.
 
@@ -144,7 +141,7 @@ $ helloworld
 Hello, World!
 ```
 
-## Zelfreflecterend proces
+# Zelfreflecterend proces
 
 Voeg nu zelf een userspace programma toe genaamd `introspection.c`.
 De bedoeling is dat dit programma zijn eigen memory layout uitprint. We zijn geïnteresseerd in de locatie van de stack en de locatie van de heap.
@@ -166,7 +163,7 @@ My heap is located at: 0x0000000000003000
 ```
 
 
-## Communicerende processen
+# Communicerende processen
 
 We weten nu hoe we user space programma's kunnen toevoegen aan xv6. Als laatste deel van deze oefenzitting is het de bedoeling dat je het programma `introspection.c` aanpast.
 
