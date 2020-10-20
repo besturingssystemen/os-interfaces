@@ -12,7 +12,7 @@ In deze oefenzitting leren jullie het besturingssysteem xv6 kennen.
 # Voorbereiding
 
 Ter voorbereiding van deze oefenzitting wordt je verwacht:
-* Een werkende Linux-omgeving te hebben. Volg [deze tutorial](https://github.com/informaticawerktuigen/klaarzetten-werkomgeving) tot stap 2 voor meer uitleg.
+* Een werkende Linux-omgeving te hebben. Volg stap 1 van [deze tutorial](https://github.com/informaticawerktuigen/klaarzetten-werkomgeving) voor meer uitleg.
 * Een werkende versie van xv6-riscv te hebben. Volg [deze tutorial](https://github.com/besturingssystemen/klaarzetten-werkomgeving) voor meer uitleg.
 * Hoofdstuk 1 van het [xv6 boek](https://github.com/mit-pdos/xv6-riscv-book/) gelezen te hebben.
 
@@ -24,8 +24,8 @@ Wanneer je xv6 start beland je in een simpele shell-omgeving.
     ```shell
     ls
     ```
-Het resultaat van het ls-commando toont de root directory van het file system van xv6. In de startdirectory staan alle user space programma's. Dit zijn dus de commando's die je kan uitvoeren vanuit de terminal.
-Daarnaast staat er een README-bestand.
+Het resultaat van het ls-commando toont de root directory van het file system van xv6. In de startdirectory staan alle user space programma's. Deze programma's kan je uitvoeren vanuit de xv6 shell.
+Daarnaast staat er ook een README-bestand.
 
 * Lees `README` met behulp van het `cat`-commando
 
@@ -44,9 +44,11 @@ Daarnaast staat er een README-bestand.
     ls
     ```
 
-Je krijgt nu normaal gezien de melding `exec ls failed`. Dit komt doordat de xv6 shell een zeer simpele shell is. In `bash` (de standaard shell in de meeste Linux-distributies) wordt een variabele gedeclareerd genaamd `$PATH` waarin verschillende directories bewaard worden. `bash` zoekt in alle directories in `$PATH` telkens wanneer een programma wordt uitgevoerd. 
+Je krijgt nu de melding `exec ls failed`. De xv6 shell is namelijk een zeer simpele shell. 
 
-De shell van xv6 (het programma `sh`) heeft geen `$PATH`-variabele en zoekt dus enkel in de huidige directory naar uitvoerbare programma's. Je kan alsnog ls uitvoeren door een relatief of absoluut pad te specifiëren.
+Wanneer je in `bash` (de standaard shell in de meeste Linux-distributies) een commando uitvoert, zoekt `bash` in alle directories in een variabele genaamd `$PATH` naar dit programma.
+De shell van xv6 (het programma `sh`) heeft geen `$PATH`-variabele en zoekt dus enkel in de huidige directory naar uitvoerbare programma's. 
+Je kan alsnog `ls` uitvoeren door een relatief of absoluut pad te specifiëren.
 
 * Voer ls uit in `sh` met een relatief pad
 
@@ -72,10 +74,10 @@ De broncode van de user space programma's die we net hebben uitgevoerd staat in 
 ## Libraries
 De libraries die je kan terugvinden in de `#include`-statements zijn niet de standaard libraries die we kennen wanneer we C programmeren.
 
-> :information_source: De [C Standard Library](https://en.wikipedia.org/wiki/C_standard_library) is een verzameling nuttige functies die door C-programma's gebruikt kunnen worden. De implementatie van deze functies hangt echter af van het onderliggende besturingssysteem. Op Ubuntu en vele andere Unix-distributies heet deze implementatie `glibc` of [The GNU C Library](https://www.gnu.org/software/libc/). Een andere populaire implementatie heet [`musl`](https://musl.libc.org/).
+> :information_source: De [C Standard Library](https://en.wikipedia.org/wiki/C_standard_library) bestaat uit een verzameling nuttige functies die door C-programma's gebruikt kunnen worden. De implementatie van deze functies hangt echter af van het onderliggende besturingssysteem. Op Ubuntu en vele andere Unix-distributies heet deze implementatie `glibc` of [The GNU C Library](https://www.gnu.org/software/libc/). Een andere populaire implementatie heet [`musl`](https://musl.libc.org/).
 
 xv6 biedt geen implementatie van libc aan. Daardoor kunnen we niet zomaar `#include <stdio.h>` gebruiken om bijvoorbeeld de functie `printf` op te roepen. 
-Als alternatief biedt xv6 enkele eigen library-functies
+Als alternatief biedt xv6 enkele eigen libc-functies
 aan.
 
 * Open het bestand `xv6-riscv/user/user.h`
@@ -144,22 +146,48 @@ Hello, World!
 # Zelfreflecterend proces
 
 Voeg nu zelf een userspace programma toe genaamd `introspection.c`.
-De bedoeling is dat dit programma zijn eigen memory layout uitprint. We zijn geïnteresseerd in de locatie van de stack en de locatie van de heap.
+De bedoeling is dat dit programma zijn eigen memory layout uitprint.
 
-* Benader de waarde van de stack pointer door gebruik te maken van [deze truc](https://stackoverflow.com/questions/20059673/print-out-value-of-stack-pointer)
+We zijn geïnteresseerd in de locatie van:
+* de stack
+* de heap
+* de .text sectie (de code van je programma)
+* de .data sectie (de global variables van je programma)
+
+
+
+Onderstaande methoden kan je gebruiken om de adressen in deze secties te zoeken:
+
+* Zoek een adres op de stack door gebruik te maken van [deze truc](https://stackoverflow.com/questions/20059673/print-out-value-of-stack-pointer)
     ```c
-    void print_stack_pointer() {
+    void print_stack_address() {
         void* p = 0;
         printf("%p", (void*)&p);
     }
     ```
-* Benader de waarde van de heap door `sbrk(1)` op te roepen. De return-waarde van deze system call geeft de oude waarde van de [`program break` (meer info)](https://stackoverflow.com/questions/6338162/what-is-program-break-where-does-it-start-from-0x00).
 
-De output van je programma zou er als volgt moeten uitzien
+Deze code maakt een lokale variabele aan en print vervolgens het adres van die variabele. Lokale variabelen worden gealloceerd in de call stack van een proces. De locatie van een lokale variabele is dus altijd een adres in de huidige stack.
+
+* Zoek een adres op de heap door `sbrk(1)` op te roepen. De return-waarde van deze system call geeft de oude waarde terug van de [`program break` (meer info)](https://stackoverflow.com/questions/6338162/what-is-program-break-where-does-it-start-from-0x00).
+* Zoek een adres in de .text section door het adres van een functie te printen. Het adres van een functie kan je verkrijgen door de naam van de functie te typen (zonder `()`)
+    ```c
+    printf("Address of func: %p", (void*) func)
+    ```
+* Zoek een adres in de .data section door een global variable te declareren en het adres van deze variabele op te vragen
+    ```c
+    int global = 0;
+    
+    int func(){
+        printf("Address of global: %p", &global);
+    }
+    ```
+De output van je programma zou er als volgt kunnen uitzien
 ```shell
 $ introspection
-My stack is located at: 0x0000000000002FB8
-My heap is located at: 0x0000000000003000
+0x0000000000002FC0 is an address in my stack
+0x0000000000003000 is an address in my heap
+0x0000000000000010 is an address in my text section
+0x0000000000000E2C is an address in my data section
 ```
 
 
