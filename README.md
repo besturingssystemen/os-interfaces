@@ -66,9 +66,9 @@ Je kan alsnog `ls` uitvoeren door een relatief of absoluut pad te specifiëren.
 De broncode van de user space programma's die we net hebben uitgevoerd staat in de folder `xv6-riscv/user` in je Git-repository.
 
 * Sluit de xv6-omgeving met <kbd>CTRL</kbd>+<kbd>A</kbd> <kbd>x</kbd>.
-* Bekijk de code van het programma `ls`.
+* Bekijk de code van het programma `cat`.
   ```shell
-  gedit xv6-riscv/user/ls.c
+  gedit xv6-riscv/user/cat.c
   ```
 
 ## Libraries
@@ -76,9 +76,8 @@ De libraries die je kan terugvinden in de `#include`-statements zijn niet de sta
 
 > :information_source: De [C Standard Library](https://en.wikipedia.org/wiki/C_standard_library) bestaat uit een verzameling nuttige functies die door C-programma's gebruikt kunnen worden. De implementatie van deze functies hangt echter af van het onderliggende besturingssysteem. Op Ubuntu en vele andere Unix-distributies heet deze implementatie `glibc` of [The GNU C Library](https://www.gnu.org/software/libc/). Een andere populaire implementatie heet [`musl`](https://musl.libc.org/).
 
-xv6 biedt geen implementatie van libc aan. Daardoor kunnen we niet zomaar `#include <stdio.h>` gebruiken om bijvoorbeeld de functie `printf` op te roepen. 
-Als alternatief biedt xv6 enkele eigen libc-functies
-aan.
+xv6 biedt maar een zeer beperkte implementatie van libc aan. Daardoor kunnen we niet zomaar `#include <stdio.h>` gebruiken om bijvoorbeeld de functie `printf` op te roepen. 
+De libc-functies die xv6 aanbiedt kan je terugvinden in `xv6-riscv/user/user.h`.
 
 * Open het bestand `xv6-riscv/user/user.h`
 
@@ -96,7 +95,7 @@ De functies in `user/user.h` maken zelf gebruik van types gedefinieerd in `kerne
 ```
 ## Programma afsluiten
 
-Merk op dat in xv6 een user space programma afgesloten wordt door de oproep ```exit(0);``` in plaats van te returnen uit main. Ook dit is het gevolg van het feit dat xv6 geen standaard C library aanbiedt. Kijk [hier](https://stackoverflow.com/questions/3463551/what-is-the-difference-between-exit-and-return) voor meer informatie.
+Merk op dat in xv6 een user space programma afgesloten wordt door de oproep ```exit(0);``` in plaats van te returnen uit main. Dit is het gevolg van het feit dat xv6 geen standaard C runtime implementeert. Een C runtime zoals [crt0](https://en.wikipedia.org/wiki/Crt0) is typisch verantwoordelijk voor het oproepen van de main-functie en na een return uit main het proces correct af te sluiten. Kijk [hier](https://stackoverflow.com/questions/3463551/what-is-the-difference-between-exit-and-return) voor meer informatie.
 
 # Eigen user space programma toevoegen
 
