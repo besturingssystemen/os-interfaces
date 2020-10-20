@@ -9,6 +9,7 @@ In deze oefenzitting leren jullie het besturingssysteem xv6 kennen.
   - [Libraries](#libraries)
   - [Programma afsluiten](#programma-afsluiten)
 - [Eigen user space programma toevoegen](#eigen-user-space-programma-toevoegen)
+- [Library functie toevoegen](#library-functie-toevoegen)
 - [Zelfreflecterend proces](#zelfreflecterend-proces)
 - [Communicerende processen](#communicerende-processen)
   - [Memory layout opstellen](#memory-layout-opstellen)
@@ -338,6 +339,10 @@ void write_value_to_layout(int value, struct memlayout* layout){
   5. Schrijf de waarde `7` naar alle addressen in de `struct memlayout` (behalve het text-adres). Doe dit enkel in het `child`-proces.
   6. Maak in het `child`-proces een `struct memvalues` met de functie `get_values_from_layout`
 
+> :bulb: In hoofdstuk 1 van het xv6 boek kan je codevoorbeelden met verklaring vinden die gebruik maken van `fork` en `pipe`
+
+
+
 ## Waarden doorsturen van child naar parent
   7. Stuur deze `struct memvalues` door naar de `parent` met behulp van de pipe
 
@@ -352,8 +357,6 @@ write(pipes_fd[1], memvals, sizeof(struct memvalues))
 9.  Gebruik `print_memlayout` in het `parent`-proces om de `memvalues` van het `child`-proces uit te printen
 10. Vraag in het `parent`-proces de eigen `memvalues` op met behulp van `get_values_from_layout` 
 11. Gebruik `print_memlayout` in het `parent`-proces om de eigen `memvalues` uit te printen
-
-> :bulb: In hoofdstuk 1 van het xv6 boek kan je codevoorbeelden met verklaring vinden die gebruik maken van `fork` en `pipe`
 
 ## Indienen
 
