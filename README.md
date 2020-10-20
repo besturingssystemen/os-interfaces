@@ -157,29 +157,15 @@ We zijn geïnteresseerd in de locatie van:
 
 Onderstaande methoden kan je gebruiken om de adressen in deze secties te zoeken:
 
-* Zoek een adres op de stack door gebruik te maken van [deze truc](https://stackoverflow.com/questions/20059673/print-out-value-of-stack-pointer)
-    ```c
-    void print_stack_address() {
-        void* p = 0;
-        printf("%p", (void*)&p);
-    }
-    ```
-
-Deze code maakt een lokale variabele aan en print vervolgens het adres van die variabele. Lokale variabelen worden gealloceerd in de call stack van een proces. De locatie van een lokale variabele is dus altijd een adres in de huidige stack.
-
+* Zoek een adres op de stack door een lokale variabele te declareren in een functie. Deze variabele zal altijd gealloceerd worden op de call stack van je proces. Het adres van deze variabele is dus een adres op de stack.
+    
 * Zoek een adres op de heap door `sbrk(1)` op te roepen. De return-waarde van deze system call geeft de oude waarde terug van de [`program break` (meer info)](https://stackoverflow.com/questions/6338162/what-is-program-break-where-does-it-start-from-0x00).
 * Zoek een adres in de .text section door het adres van een functie te printen. Het adres van een functie kan je verkrijgen door de naam van de functie te typen (zonder `()`)
     ```c
     printf("Address of func: %p", (void*) func)
     ```
 * Zoek een adres in de .data section door een global variable te declareren en het adres van deze variabele op te vragen
-    ```c
-    int global = 0;
-    
-    int func(){
-        printf("Address of global: %p", &global);
-    }
-    ```
+
 De output van je programma zou er als volgt kunnen uitzien
 ```shell
 $ introspection
