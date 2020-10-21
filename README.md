@@ -248,66 +248,26 @@ Gebruik onderstaande `struct memlayout` om deze waarden te bewaren.
 ```c
 struct memlayout {
     void* text;
-    void* data;
-    void* stack;
-    void* heap;
+    int* data;
+    int* stack;
+    int* heap;
 };
 ```
 
 
 Onderstaande methoden kan je gebruiken om de adressen van elke sectie te vinden:
 
-* Zoek een adres op de stack door een lokale variabele te declareren in een functie. Deze variabele zal altijd gealloceerd worden op de call stack van je proces. Het adres van deze variabele is dus een adres op de stack. 
-* Zoek een adres op de heap door `sbrk(1)` op te roepen. De return-waarde van deze system call geeft de oude waarde terug van de [`program break` (meer info)](https://stackoverflow.com/questions/6338162/what-is-program-break-where-does-it-start-from-0x00).
-* Zoek een adres in de .text section door het adres van een functie te printen. Het adres van een functie kan je verkrijgen door de naam van de functie te typen (zonder `()`)
+* Zoek een adres op de stack door een lokale variabele (van type `int`) te declareren in een functie. Deze variabele zal altijd gealloceerd worden op de call stack van je proces. Het adres van deze variabele is dus een adres op de stack.
+* Zoek een adres op de heap door een `int` te alloceren via `sbrk(sizeof(int))`. De return-waarde van deze system call geeft de oude waarde terug van de [`program break` (meer info)](https://en.wikipedia.org/wiki/Sbrk) wat het adres is van de nieuwe allocatie.
+* Zoek een adres in de .text section door het adres van een functie op te slaan. Het adres van een functie kan je verkrijgen door de naam van de functie te typen (zonder `()`)
     ```c
-    printf("Address of func: %p", (void*) func)
+    void* function_address = (void*)function_name;
     ```
-* Zoek een adres in de .data section door een globale variabele te declareren en het adres van deze variabele op te vragen
+* Zoek een adres in de .data section door een globale variabele (van type `int`) te declareren en het adres van deze variabele op te vragen.
 
 Zorg ervoor dat de main-functie van je programma een `struct memlayout` aanmaakt. Sla in elk veld van de struct een correct adres op uit de bijhorende sectie van het programma.
+Voeg daarna een functie toe die de waarden in `struct memlayout` afprint en vergelijk je resultaat met Figuur 3.4 in het xv6 boek.
 
-Voeg vervolgens de onderstaande snippet toe aan je code. 
-`get_values_from_layout` maakt een kopie van de waarden die in de adressen van `struct memlayout` opgeslagen zijn.
-
-```c
-struct memvalues {
-    int data;
-    int stack;
-    int heap;
-};
-
-struct memvalues get_values_from_layout(struct memlayout layout){
-    struct memvalues result;
-    result.data = *(int*) layout.data;
-    result.stack = *(int*) layout.stack;
-    result.heap = *(int*) layout.heap;
-    return result;
-}
-
-void print_memory(struct memlayout layout, struct memvalues values){
-    printf("%p (.text)\n%p:%d (.data)\n%p:%d (.stack)\n%p:%d (.heap)\n",
-            layout.text,
-            layout.data,
-            values.data,
-            layout.stack,
-            values.stack,
-            layout.heap,
-            values.heap);
-}
-```
-
-* Gebruik de functie `get_values_from_layout` om een `struct memvalues` te verkrijgen vanuit je memory layout.
-* Print ten slotte alle waarden door aan `print_memory` de `struct memlayout` en de `struct memvalues` door te geven.
-
-De output van je programma zou er als volgt kunnen uitzien:
-```shell
-$ introspection
-0x0000000000000044 (.text)
-0x0000000000000E34:42 (.data)
-0x0000000000002FCC:42 (.stack)
-0x0000000000003000:0 (.heap)
-```
 > :exclamation: De bovenstaande werkwijzen geven telkens een adres terug uit een bepaalde sectie van het programma. 
 > Deze adressen zijn niet noodzakelijk de start- of eindadressen van deze secties.
 > Ze vallen wel telkens in de range [`section start addr`, `section end addr`]
@@ -318,45 +278,40 @@ $ introspection
 
 We weten nu hoe we user space programma's kunnen toevoegen aan xv6. Als laatste deel van deze oefenzitting en als *permanente evaluatie* is het de bedoeling dat je het programma `introspection.c` uitbreidt.
 
-Zorg ervoor dat je programma onderstaande stappen uitvoert:
+Het doel van deze oefening is de memory layout van een parent process te vergelijken met dat van een child process.
+Naast informatie over de memory layout van de processen, zijn we ook geïnteresseerd in de *waarden* op deze memory locations.
+Bijkomend zal het child process zelf niets mogen afprinten maar zijn layout informatie delen met de parent via een pipe.
 
-## Memory layout opstellen
-  1. Maak een correcte `struct memlayout` aan zoals in het vorige deel
-  2. Schrijf de waarde `42` naar alle addressen in de `struct memlayout` (behalve het text-adres). Je kan hiervoor onderstaande functie gebruiken.
+Je programma zal de volgende stappen moeten uitvoeren:
+1. Initialiseer een `struct memlayout` op dezelfde manier als in de vorige oefening;
+1. Zorg ervoor dat alle gealloceerde variabelen geïnitialiseerd zijn;
+1. `fork` een nieuw process en zorg dat er een `pipe` gedeeld wordt tussen parent en child;
+1. In het child process:
+    1. Initialiseer een `struct memlayout` op dezelfde manier als in de vorige oefening;
+    1. Zorg ervoor dat alle gealloceerde variabelen geïnitialiseerd zijn (gebruik een *andere waarde* dan in het parent process);
+    1. Kopieer de waarden in een `struct memvalues` (zie hieronder);
+    1. Zend eerst de `struct memlayout` en dan de `struct memvalues` naar de parent via de pipe;
+1. In het parent process:
+    1. Ontvang `struct memlayout` en `struct memvalues` van het child process;
+    1. Print deze structs via `print_mem` (zie hieronder);
+    1. Initialiseer een `struct memvalues` met de waarden in het parent process;
+    1. Print de structs van het parent process via `print_mem`.
 
 ```c
-void write_value_to_layout(int value, struct memlayout* layout){
-    *((int*) layout->data) = value;
-    *((int*) layout->stack) = value;
-    *((int*) layout->heap) = value;
+struct memvalues {
+    int data;
+    int stack;
+    int heap;
+};
+
+// who should be either "parent" or "child"
+void print_mem(const char* who, struct memlayout* layout, struct memvalues* values) {
+    printf("%s:stack:%p:%d\n", who, layout->stack, values->stack);
+    printf("%s:heap:%p:%d\n", who, layout->heap, values->heap);
+    printf("%s:data:%p:%d\n", who, layout->data, values->data);
+    printf("%s:text:%p\n", who, layout->text);
 }
 ```
-
-## Kopie van het proces maken 
-
-  3. Open een `pipe`
-  4. Maak een `child` proces aan met behulp van `fork()`
-  5. Schrijf de waarde `7` naar alle addressen in de `struct memlayout` (behalve het text-adres). Doe dit enkel in het `child`-proces.
-  6. Maak in het `child`-proces een `struct memvalues` met de functie `get_values_from_layout`
-
-> :bulb: In hoofdstuk 1 van het xv6 boek kan je codevoorbeelden met verklaring vinden die gebruik maken van `fork` en `pipe`
-
-
-
-## Waarden doorsturen van child naar parent
-  7. Stuur deze `struct memvalues` door naar de `parent` met behulp van de pipe
-
-```C
-//we assume the write-end of the pipe in pipes_fd[1] and the memory values in memvals
-write(pipes_fd[1], memvals, sizeof(struct memvalues))    
-```
-8. Lees in het `parent`-proces de `memvalues` van het `child` proces uit de pipe. Bewaar het resultaat in een nieuwe `struct memvalues`.
-
-## Waarden printen
-
-9.  Gebruik `print_memlayout` in het `parent`-proces om de `memvalues` van het `child`-proces uit te printen
-10. Vraag in het `parent`-proces de eigen `memvalues` op met behulp van `get_values_from_layout` 
-11. Gebruik `print_memlayout` in het `parent`-proces om de eigen `memvalues` uit te printen
 
 ## Indienen
 
