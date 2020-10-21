@@ -268,7 +268,8 @@ Voeg daarna een functie toe die de waarden in `struct memlayout` afprint en verg
 
 > :exclamation: De bovenstaande werkwijzen geven telkens een adres terug uit een bepaalde sectie van het programma. 
 > Deze adressen zijn niet noodzakelijk de start- of eindadressen van deze secties.
-> Ze vallen wel telkens in de range [`section start addr`, `section end addr`]
+> Ze vallen wel telkens in de range [`section start addr`, `section end addr`].
+> Het is voor deze opgave **niet nodig** om het startadres te geven van een sectie. Een adres in de sectie-range is voldoende.
 
 
 
