@@ -195,6 +195,8 @@ UPROGS=\
     ...
     $U/_zombie\
 ```
+> :information_source: De `UPROGS` Makefile variabele bevat alle user-space programma's die gecompileerd moeten worden.
+> De Makefile zorgt ervoor dat een entry van de vorm `$U/_prog` het bestand `user/prog.c` zal compileren en installeren in de root directory als een uitvoerbaar bestand genaamd `prog`.
 * Compileer `xv6` en start via qemu
 ```shell
 make qemu
