@@ -12,10 +12,6 @@ In deze oefenzitting leren jullie het besturingssysteem xv6 kennen.
 - [Library functie toevoegen](#library-functie-toevoegen)
 - [Zelfreflecterend proces](#zelfreflecterend-proces)
 - [Communicerende processen](#communicerende-processen)
-  - [Memory layout opstellen](#memory-layout-opstellen)
-  - [Kopie van het proces maken](#kopie-van-het-proces-maken)
-  - [Waarden doorsturen van child naar parent](#waarden-doorsturen-van-child-naar-parent)
-  - [Waarden printen](#waarden-printen)
   - [Indienen](#indienen)
 
 # Voorbereiding
