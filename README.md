@@ -56,10 +56,10 @@ Indien `make qemu` ervoor zorgt dat xv6 opstart, is je repository correct geclon
 
 Om ervoor te zorgen dat wij weten welke student hoort bij een GitHub account vragen we jullie een bestand `OWNER` te committen met daarin je naam.
 
-* Maak een bestand met je naam in
+* Maak een bestand aan met je r-nummer (vervang `<r-nummer>` door je eigen r-nummer)
 ```shell
 cd xv6-permanente-evaluatie-<GitHubUsername>
-echo "Voornaam Achternaam" > OWNER
+echo "<r-nummer>" > OWNER
 ```
 * Indien je `git` voor het eerst gebruikt in je Linux-installatie moet je het configureren met 
 ```shell 
@@ -71,7 +71,7 @@ $ git config --global user.email johndoe@example.com
 ```shell
 git add OWNER
 git commit -m "Added OWNER file"
-git push origin master
+git push
 ```` 
 
 * Verifieer dat je OWNER bestand correct toegevoegd is aan je remote repository door naar de web interface van je repository te surfen
@@ -324,7 +324,7 @@ Dit deel van de opgave moet ingediend worden en telt mee voor de permanente eval
 ```shell
 git add introspection.c
 git commit -m "Added introspection program"
-git push origin master
+git push
 ```
 
 > :bulb: Controleer op de webpagina van je repository of het bestand correct gecommit is.
