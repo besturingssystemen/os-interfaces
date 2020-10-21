@@ -287,7 +287,8 @@ Je programma zal de volgende stappen moeten uitvoeren:
 1. Zorg ervoor dat alle gealloceerde variabelen geïnitialiseerd zijn;
 1. `fork` een nieuw process en zorg dat er een `pipe` gedeeld wordt tussen parent en child;
 1. In het child process:
-    1. Initialiseer een `struct memlayout` op dezelfde manier als in de vorige oefening;
+    1. Initialiseer een `struct memlayout` op dezelfde manier als in de vorige oefening.
+       Je kan hiervoor de stack en data variabelen hergebruiken maar maak wel een nieuwe heap allocatie aan;
     1. Zorg ervoor dat alle gealloceerde variabelen geïnitialiseerd zijn (gebruik een *andere waarde* dan in het parent process);
     1. Kopieer de waarden in een `struct memvalues` (zie hieronder);
     1. Zend eerst de `struct memlayout` en dan de `struct memvalues` naar de parent via de pipe;
@@ -312,6 +313,9 @@ void print_mem(const char* who, struct memlayout* layout, struct memvalues* valu
     printf("%s:text:%p\n", who, layout->text);
 }
 ```
+
+Denk voor je begint aan de implementatie na over wat de output van je programma zal zijn.
+Probeer voor jezelf te voorspellen wat de relatie gaat zijn tussen adressen en waarden van variabelen in parent en child processen.
 
 ## Indienen
 
