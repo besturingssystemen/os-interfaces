@@ -122,7 +122,7 @@ Je kan alsnog `ls` uitvoeren door een relatief of absoluut pad te specifiëren.
 
 # User space programma bekijken
 
-De broncode van de user space programma's die we net hebben uitgevoerd staat in de folder `xv6-riscv/user` in je Git-repository.
+De broncode van de user space programma's die we net hebben uitgevoerd staat in de folder `user` in je Git-repository.
 
 * Sluit de xv6-omgeving met <kbd>CTRL</kbd>+<kbd>A</kbd> <kbd>x</kbd>.
 * Bekijk de code van het programma `cat`.
@@ -136,9 +136,9 @@ De libraries die je kan terugvinden in de `#include`-statements zijn niet de sta
 > :information_source: De [C Standard Library](https://en.wikipedia.org/wiki/C_standard_library) bestaat uit een verzameling nuttige functies die door C-programma's gebruikt kunnen worden. De implementatie van deze functies hangt echter af van het onderliggende besturingssysteem. Op Ubuntu en vele andere Unix-distributies heet deze implementatie `glibc` of [The GNU C Library](https://www.gnu.org/software/libc/). Een andere populaire implementatie heet [`musl`](https://musl.libc.org/).
 
 xv6 biedt maar een zeer beperkte implementatie van libc aan. Daardoor kunnen we niet zomaar `#include <stdio.h>` gebruiken om bijvoorbeeld de functie `printf` op te roepen. 
-De libc-functies die xv6 aanbiedt kan je terugvinden in `xv6-riscv/user/user.h`.
+De libc-functies die xv6 aanbiedt kan je terugvinden in `user/user.h`.
 
-* Open het bestand `xv6-riscv/user/user.h`
+* Open het bestand `user/user.h`
 
     ```shell
     gedit user/user.h
@@ -160,7 +160,7 @@ Merk op dat in xv6 een user space programma afgesloten wordt door de oproep ```e
 
 We zijn klaar om een simpel user space programma toe te voegen aan xv6.
 
-* Maak een bestand `helloworld.c` in de directory `xv6-riscv/user`
+* Maak een bestand `helloworld.c` in de directory `user`
 
 ```shell
 cd xv6-riscv
@@ -173,12 +173,12 @@ touch user/helloworld.c
 gedit user/helloworld.c &
 ```
 
-Bij het compileren van het besturingssysteem met `make qemu` worden ook alle programma's in de directory `xv6-riscv/user` gecompileerd naar Risc-V. Dit wordt gespecifieerd door middel van de `Makefile` in `xv6-riscv`.  
+Bij het compileren van het besturingssysteem met `make qemu` worden ook alle programma's in de directory `user` gecompileerd naar Risc-V. Dit wordt gespecifieerd door middel van de `Makefile` in `xv6-riscv`.
 
 We voegen nu het helloworld-programma toe aan de Makefile.
 
 
-* Open het bestand `xv6-riscv/Makefile`
+* Open het bestand `Makefile`
 ```shell
 gedit Makefile &
 ```
