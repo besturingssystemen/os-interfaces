@@ -193,7 +193,7 @@ UPROGS=\
     ...
     $U/_helloworld\
     ...
-    $U/_floats\
+    $U/_zombie\
 ```
 * Compileer `xv6` en start via qemu
 ```shell
