@@ -127,7 +127,7 @@ De broncode van de user space programma's die we net hebben uitgevoerd staat in 
 * Sluit de xv6-omgeving met <kbd>CTRL</kbd>+<kbd>A</kbd> <kbd>x</kbd>.
 * Bekijk de code van het programma `cat`.
   ```shell
-  gedit xv6-riscv/user/cat.c
+  gedit user/cat.c
   ```
 
 ## Libraries
@@ -141,7 +141,7 @@ De libc-functies die xv6 aanbiedt kan je terugvinden in `xv6-riscv/user/user.h`.
 * Open het bestand `xv6-riscv/user/user.h`
 
     ```shell
-    gedit xv6-riscv/user/user.h
+    gedit user/user.h
     ```
 
 De functies in dit bestand kunnen gebruikt worden door alle user space programma's. In plaats van de standaard C header files te includen (zoals `stdio.h`) zullen we in xv6 telkens het bestand `user/user.h` includen. 
