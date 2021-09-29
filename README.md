@@ -206,7 +206,7 @@ Hello, World!
 # Library functie toevoegen
 
 Als er enkel een string afgeprint moet worden zonder interpolatie van variabelen, gebruikt men meestal de functie `puts` uit libc.
-De beperkt libc versie die xv6 aanbiedt, implementeert deze functie echter niet.
+De beperkte libc versie die xv6 aanbiedt, implementeert deze functie echter niet.
 Je hebt in de vorige oefening dus waarschijnlijk de (minder efficiënte) `printf` functie gebruikt.
 In deze oefening moeten jullie `puts` implementeren als een library functie en de oplossing van de vorige oefening aanpassen om deze functie gebruiken.
 
