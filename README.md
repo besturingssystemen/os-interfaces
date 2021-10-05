@@ -36,17 +36,17 @@ Wanneer je een e-mail krijg van GitHub dat je repository klaar is, moet je deze 
 * Clone je persoonlijke repository
 
 ```shell
-git clone https://github.com/besturingssystemen/xv6-permanente-evaluatie-<GitHubUsername>.git
+[ubuntu-shell]$ git clone https://github.com/besturingssystemen/xv6-permanente-evaluatie-<GitHubUsername>.git
 ```
 
 * Verifieer dat je repository correct gecloned is door `make qemu` uit te voeren.
 
 ```shell
-cd xv6-permanente-evaluatie-<GitHubUsername>
-make qemu
+[ubuntu-shell]$ cd xv6-permanente-evaluatie-<GitHubUsername>
+[ubuntu-shell]$ make qemu
 ```
 
-Indien `make qemu` ervoor zorgt dat xv6 opstart, is je repository correct gecloned.
+Indien `make qemu` ervoor zorgt dat xv6 opstart, is je repository correct gecloned. 
 
 ## Owner file
 
@@ -54,25 +54,25 @@ Om ervoor te zorgen dat wij weten welke student hoort bij een GitHub account vra
 
 * Maak een bestand aan met je r-nummer (vervang `<r-nummer>` door je eigen r-nummer)
 ```shell
-cd xv6-permanente-evaluatie-<GitHubUsername>
-echo "<r-nummer>" > OWNER
+[ubuntu-shell]$ cd xv6-permanente-evaluatie-<GitHubUsername>
+[ubuntu-shell]$ echo "<r-nummer>" > OWNER
 ```
 * Indien je `git` voor het eerst gebruikt in je Linux-installatie moet je het configureren met 
 ```shell 
-$ git config --global user.name "John Doe"
-$ git config --global user.email johndoe@example.com 
+[ubuntu-shell]$ git config --global user.name "John Doe"
+[ubuntu-shell]$ git config --global user.email johndoe@example.com 
 ```
 
 * Commit en push vervolgens het `OWNER` bestand met `git`
 ```shell
-git add OWNER
-git commit -m "Added OWNER file"
-git push
+[ubuntu-shell]$ git add OWNER
+[ubuntu-shell]$ git commit -m "Added OWNER file"
+[ubuntu-shell]$ git push
 ```` 
 
 * Verifieer dat je OWNER bestand correct toegevoegd is aan je remote repository door naar de web interface van je repository te surfen
 ```shell
-firefox https://github.com/besturingssystemen/xv6-permanente-evaluatie-GithubUsername
+[ubuntu-shell]$ firefox https://github.com/besturingssystemen/xv6-permanente-evaluatie-GithubUsername
 ```
 
 # xv6 shell
@@ -81,7 +81,7 @@ Wanneer je xv6 start met ```make qemu``` beland je in een simpele shell-omgeving
 
 * Voer het commando ``ls`` uit in de xv6 shell
     ```shell
-    ls
+    [xv6-shell]$ ls
     ```
 Het resultaat van het ls-commando toont de root directory van het file system van xv6. In de startdirectory staan alle user space programma's. Deze programma's kan je uitvoeren vanuit de xv6 shell.
 Daarnaast staat er ook een README-bestand.
@@ -89,18 +89,18 @@ Daarnaast staat er ook een README-bestand.
 * Lees `README` met behulp van het `cat`-commando
 
     ```shell
-    cat README
+    [ubuntu-shell]$ cat README
     ```
 
 * Maak een folder aan genaamd `testfolder` en `cd` naar die folder.
   
   ```shell
-  mkdir testfolder
-  cd testfolder
+  [ubuntu-shell]$ mkdir testfolder
+  [ubuntu-shell]$ cd testfolder
   ```
 * Verifieer nu met `ls` dat je in de lege folder zit
     ```shell
-    ls
+    [xv6-shell]$ ls
     ```
 
 Je krijgt nu de melding `exec ls failed`. De xv6 shell is namelijk een zeer simpele shell. 
@@ -112,11 +112,11 @@ Je kan alsnog `ls` uitvoeren door een relatief of absoluut pad te specifiëren.
 * Voer ls uit in `sh` met een relatief pad
 
     ```shell
-    ../ls
+    [xv6-shell]$ ../ls
     ```
 * Voer ls uit in `sh` met een absoluut pad 
     ```shell
-    /ls
+    [xv6-shell]$ /ls
     ```
 
 
@@ -127,7 +127,7 @@ De broncode van de user space programma's die we net hebben uitgevoerd staat in 
 * Sluit de xv6-omgeving met <kbd>CTRL</kbd>+<kbd>A</kbd> <kbd>x</kbd>.
 * Bekijk de code van het programma `cat`.
   ```shell
-  gedit user/cat.c
+  [ubuntu-shell]$ gedit user/cat.c
   ```
 
 ## Libraries
@@ -141,7 +141,7 @@ De libc-functies die xv6 aanbiedt kan je terugvinden in `user/user.h`.
 * Open het bestand `user/user.h`
 
     ```shell
-    gedit user/user.h
+    [ubuntu-shell]$ gedit user/user.h
     ```
 
 De functies in dit bestand kunnen gebruikt worden door alle user space programma's. In plaats van de standaard C header files te includen (zoals `stdio.h`) zullen we in xv6 telkens het bestand `user/user.h` includen. 
@@ -163,14 +163,14 @@ We zijn klaar om een simpel user space programma toe te voegen aan xv6.
 * Maak een bestand `helloworld.c` in de directory `user`
 
 ```shell
-cd xv6-riscv
-touch user/helloworld.c
+[ubuntu-shell]$ cd xv6-riscv
+[ubuntu-shell]$ touch user/helloworld.c
 ```
 
 * Schrijf in dit bestand een simpel C-programma dat de string *Hello, world!* print naar de terminal.
 
 ```shell
-gedit user/helloworld.c &
+[ubuntu-shell]$ gedit user/helloworld.c &
 ```
 
 Bij het compileren van het besturingssysteem met `make qemu` worden ook alle programma's in de directory `user` gecompileerd naar Risc-V. Dit wordt gespecifieerd door middel van de `Makefile` in `xv6-riscv`.
@@ -180,7 +180,7 @@ We voegen nu het helloworld-programma toe aan de Makefile.
 
 * Open het bestand `Makefile`
 ```shell
-gedit Makefile &
+[ubuntu-shell]$ gedit Makefile &
 ```
 * Zoek naar de definitie van UPROGS en voeg het programma toe
 ```
@@ -195,11 +195,11 @@ UPROGS=\
 > De Makefile zorgt ervoor dat een entry van de vorm `$U/_prog` het bestand `user/prog.c` zal compileren en installeren in de root directory als een uitvoerbaar bestand genaamd `prog`.
 * Compileer `xv6` en start via qemu
 ```shell
-make qemu
+[ubuntu-shell]$ make qemu
 ```
 * Voer het programma uit
 ```shell
-$ helloworld
+[xv6-shell]$ helloworld
 Hello, World!
 ```
 
@@ -321,9 +321,9 @@ Probeer voor jezelf te voorspellen wat de relatie gaat zijn tussen adressen en w
 Dit deel van de opgave moet ingediend worden en telt mee voor de permanente evaluatie van de oefeningen.
 * Commit en push het bestand `introspection.c` naar je repository
 ```shell
-git add introspection.c
-git commit -m "Added introspection program"
-git push
+[ubuntu-shell]$ git add introspection.c
+[ubuntu-shell]$ git commit -m "Added introspection program"
+[ubuntu-shell]$ git push
 ```
 
 > :bulb: Controleer op de webpagina van je repository of het bestand correct gecommit is.
