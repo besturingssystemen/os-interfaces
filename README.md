@@ -336,7 +336,7 @@ Let wel: we kijken jullie code ook nog handmatig na en het feit dat de testen sl
 ## Indienen
 
 Dit deel van de opgave moet ingediend worden en telt mee voor de permanente evaluatie van de oefeningen.
-* Commit en push het bestand `introspection.c` naar je repository
+* Commit en push het bestand `evaluation.c` naar je repository
 ```shell
 git add user/evaluation.c # Voeg ook andere aangepaste bestanden toe die nodig zijn
 git commit -m "Added introspection program"
