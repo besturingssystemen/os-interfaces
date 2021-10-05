@@ -19,7 +19,7 @@ In deze oefenzitting leren jullie het besturingssysteem xv6 kennen.
 Ter voorbereiding van deze oefenzitting wordt je verwacht:
 * Een werkende Linux-omgeving te hebben. Volg stap 1 van [deze tutorial](https://github.com/informaticawerktuigen/klaarzetten-werkomgeving) voor meer uitleg.
 * Een werkende versie van xv6-riscv te hebben. Volg [deze tutorial](https://github.com/besturingssystemen/klaarzetten-werkomgeving) voor meer uitleg.
-* Hoofdstuk 1 van het [xv6 boek](https://github.com/besturingssystemen/xv6-riscv) gelezen te hebben.
+* Hoofdstuk 1 van het [xv6 boek](https://github.com/besturingssystemen/xv6-riscv-book/releases/latest/download/book.pdf) gelezen te hebben.
 
 # GitHub classroom
 
@@ -206,7 +206,7 @@ Hello, World!
 # Library functie toevoegen
 
 Als er enkel een string afgeprint moet worden zonder interpolatie van variabelen, gebruikt men meestal de functie `puts` uit libc.
-De beperkt libc versie die xv6 aanbiedt, implementeert deze functie echter niet.
+De beperkte libc versie die xv6 aanbiedt, implementeert deze functie echter niet.
 Je hebt in de vorige oefening dus waarschijnlijk de (minder efficiënte) `printf` functie gebruikt.
 In deze oefening moeten jullie `puts` implementeren als een library functie en de oplossing van de vorige oefening aanpassen om deze functie gebruiken.
 
