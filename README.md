@@ -67,14 +67,14 @@ Daarnaast staat er ook een README-bestand.
 * Lees `README` met behulp van het `cat`-commando
 
     ```PowerShell
-    [ubuntu-shell]$ cat README
+    [xv6-shell]$ cat README
     ```
 
 * Maak een folder aan genaamd `testfolder` en `cd` naar die folder.
   
   ```PowerShell
-  [ubuntu-shell]$ mkdir testfolder
-  [ubuntu-shell]$ cd testfolder
+  [xv6-shell]$ mkdir testfolder
+  [xv6-shell]$ cd testfolder
   ```
 
 * Verifieer nu met `ls` dat je in de lege folder zit
