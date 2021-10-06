@@ -37,13 +37,13 @@ Wanneer je een e-mail krijg van GitHub dat je repository klaar is, moet je deze 
 
 * Clone je persoonlijke repository
 
-```shell
+```bash
 [ubuntu-shell]$ git clone  https://github.com/besturingssystemen-2021-2022/os-interfaces-<GitHubUsername>.git
 ```
 
 * Verifieer dat je repository correct gecloned is door `make qemu` uit te voeren.
 
-```shell
+```bash
 [ubuntu-shell]$ cd os-interfaces-<GitHubUsername>
 [ubuntu-shell]$ make qemu
 ```
@@ -56,21 +56,21 @@ Om ervoor te zorgen dat wij weten welke student hoort bij een GitHub account vra
 
 * Maak een bestand aan met je r-nummer (vervang `<r-nummer>` door je eigen r-nummer)
 
-```shell
+```bash
 [ubuntu-shell]$ cd xv6-permanente-evaluatie-<GitHubUsername>
 [ubuntu-shell]$ echo "<r-nummer>" > OWNER
 ```
 
 * Indien je `git` voor het eerst gebruikt in je Linux-installatie moet je het configureren met
 
-```shell
+```bash
 [ubuntu-shell]$ git config --global user.name "John Doe"
 [ubuntu-shell]$ git config --global user.email johndoe@example.com 
 ```
 
 * Commit en push vervolgens het `OWNER` bestand met `git`
 
-```shell
+```bash
 [ubuntu-shell]$ git add OWNER
 [ubuntu-shell]$ git commit -m "Added OWNER file"
 [ubuntu-shell]$ git push
@@ -78,7 +78,7 @@ Om ervoor te zorgen dat wij weten welke student hoort bij een GitHub account vra
 
 * Verifieer dat je OWNER bestand correct toegevoegd is aan je remote repository door naar de web interface van je repository te surfen
 
-```shell
+```bash
 [ubuntu-shell]$ firefox https://github.com/besturingssystemen/xv6-permanente-evaluatie-GithubUsername
 ```
 
@@ -88,7 +88,7 @@ Wanneer je xv6 start met ```make qemu``` beland je in een simpele shell-omgeving
 
 * Voer het commando ``ls`` uit in de xv6 shell
 
-    ```shell
+    ```bash
     [xv6-shell]$ ls
     ```
 
@@ -97,20 +97,20 @@ Daarnaast staat er ook een README-bestand.
 
 * Lees `README` met behulp van het `cat`-commando
 
-    ```shell
+    ```bash
     [ubuntu-shell]$ cat README
     ```
 
 * Maak een folder aan genaamd `testfolder` en `cd` naar die folder.
   
-  ```shell
+  ```bash
   [ubuntu-shell]$ mkdir testfolder
   [ubuntu-shell]$ cd testfolder
   ```
 
 * Verifieer nu met `ls` dat je in de lege folder zit
   
-    ```shell
+    ```bash
     [xv6-shell]$ ls
     ```
 
@@ -122,13 +122,13 @@ Je kan alsnog `ls` uitvoeren door een relatief of absoluut pad te specifiëren.
 
 * Voer ls uit in `sh` met een relatief pad
 
-    ```shell
+    ```bash
     [xv6-shell]$ ../ls
     ```
 
 * Voer ls uit in `sh` met een absoluut pad
 
-    ```shell
+    ```bash
     [xv6-shell]$ /ls
     ```
 
@@ -139,7 +139,7 @@ De broncode van de user space programma's die we net hebben uitgevoerd staat in 
 * Sluit de xv6-omgeving met <kbd>CTRL</kbd>+<kbd>A</kbd> <kbd>x</kbd>.
 * Bekijk de code van het programma `cat`.
 
-  ```shell
+  ```bash
   [ubuntu-shell]$ gedit user/cat.c
   ```
 
@@ -154,7 +154,7 @@ De libc-functies die xv6 aanbiedt kan je terugvinden in `user/user.h`.
 
 * Open het bestand `user/user.h`
 
-    ```shell
+    ```bash
     [ubuntu-shell]$ gedit user/user.h
     ```
 
@@ -177,14 +177,14 @@ We zijn klaar om een simpel user space programma toe te voegen aan xv6.
 
 * Maak een bestand `helloworld.c` in de directory `user`
 
-```shell
+```bash
 [ubuntu-shell]$ cd xv6-riscv
 [ubuntu-shell]$ touch user/helloworld.c
 ```
 
 * Schrijf in dit bestand een simpel C-programma dat de string *Hello, world!* print naar de terminal.
 
-```shell
+```bash
 [ubuntu-shell]$ gedit user/helloworld.c &
 ```
 
@@ -194,7 +194,7 @@ We voegen nu het helloworld-programma toe aan de Makefile.
 
 * Open het bestand `Makefile`
 
-```shell
+```bash
 [ubuntu-shell]$ gedit Makefile &
 ```
 
@@ -214,13 +214,13 @@ UPROGS=\
 
 * Compileer `xv6` en start via qemu
 
-```shell
+```bash
 [ubuntu-shell]$ make qemu
 ```
 
 * Voer het programma uit
 
-```shell
+```bash
 [xv6-shell]$ helloworld
 Hello, World!
 ```
@@ -301,7 +301,7 @@ We weten nu hoe we user space programma's kunnen toevoegen aan xv6.
 Als laatste deel van deze oefenzitting en als *permanente evaluatie* is het de bedoeling dat je het programma `introspection.c` uitbreidt _in een nieuw bestand_ genaamd `evaluation.c`.
 Maak dus eerst een kopie:
 
-```shell
+```bash
 cp user/introspection.c user/evaluation.c
 ```
 
@@ -352,7 +352,7 @@ Probeer voor jezelf te voorspellen wat de relatie gaat zijn tussen adressen en w
 We hebben een paar simpele testen gegeven die jullie kunnen gebruiken om te verifiëren dat er geen grote fouten gemaakt zijn.
 Je kan deze uitvoeren via het volgende commando:
 
-```shell
+```bash
 make test
 ```
 
@@ -364,7 +364,7 @@ Dit deel van de opgave moet ingediend worden en telt mee voor de permanente eval
 
 * Commit en push het bestand `evaluation.c` naar je repository
 
-```shell
+```bash
 [ubuntu-shell]$ git add user/evaluation.c # Voeg ook andere aangepaste bestanden toe die nodig zijn
 [ubuntu-shell]$ git commit -m "Added introspection program"
 [ubuntu-shell]$ git push
