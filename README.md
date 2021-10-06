@@ -147,7 +147,7 @@ We zijn klaar om een simpel user space programma toe te voegen aan xv6.
 * Maak een bestand `helloworld.c` in de directory `user`
 
 ```PowerShell
-[ubuntu-shell]$ cd xv6-riscv
+[ubuntu-shell]$ cd os-interfaces-<GitHubUsername>
 [ubuntu-shell]$ touch user/helloworld.c
 ```
 
