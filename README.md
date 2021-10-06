@@ -3,7 +3,6 @@ In deze oefenzitting leren jullie het besturingssysteem xv6 kennen.
 - [Voorbereiding](#voorbereiding)
 - [GitHub classroom](#github-classroom)
   - [Persoonlijke repository](#persoonlijke-repository)
-  - [Owner file](#owner-file)
 - [xv6 shell](#xv6-shell)
 - [User space programma bekijken](#user-space-programma-bekijken)
   - [Libraries](#libraries)
@@ -49,38 +48,6 @@ Wanneer je een e-mail krijg van GitHub dat je repository klaar is, moet je deze 
 ```
 
 Indien `make qemu` ervoor zorgt dat xv6 opstart, is je repository correct gecloned.
-
-## Owner file
-
-Om ervoor te zorgen dat wij weten welke student hoort bij een GitHub account vragen we jullie een bestand `OWNER` te committen met daarin je naam.
-
-* Maak een bestand aan met je r-nummer (vervang `<r-nummer>` door je eigen r-nummer)
-
-```PowerShell
-[ubuntu-shell]$ cd xv6-permanente-evaluatie-<GitHubUsername>
-[ubuntu-shell]$ echo "<r-nummer>" > OWNER
-```
-
-* Indien je `git` voor het eerst gebruikt in je Linux-installatie moet je het configureren met
-
-```PowerShell
-[ubuntu-shell]$ git config --global user.name "John Doe"
-[ubuntu-shell]$ git config --global user.email johndoe@example.com 
-```
-
-* Commit en push vervolgens het `OWNER` bestand met `git`
-
-```PowerShell
-[ubuntu-shell]$ git add OWNER
-[ubuntu-shell]$ git commit -m "Added OWNER file"
-[ubuntu-shell]$ git push
-````
-
-* Verifieer dat je OWNER bestand correct toegevoegd is aan je remote repository door naar de web interface van je repository te surfen
-
-```PowerShell
-[ubuntu-shell]$ firefox https://github.com/besturingssystemen/xv6-permanente-evaluatie-GithubUsername
-```
 
 # xv6 shell
 
