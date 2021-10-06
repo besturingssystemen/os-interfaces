@@ -34,10 +34,12 @@ Hierin kunnen jullie met `git` zelf wijzigingen toevoegen en committen.
 
 Wanneer je een e-mail krijg van GitHub dat je repository klaar is, moet je deze clonen naar je eigen machine. Dit kan enkele minuten duren.
 
+> :warning: Om bij GitHub te authenticeren via de command line maken we gebruik van ssh met public/private key authentication. Onderstaand clone-commando zal pas werken na het uitvoeren van het commando ```ssh-add <pad-naar-je-private-key>```. Het genereren en gebruik van deze ssh keys wordt uitgelegd in de laatste sectie van [deze tutorial](https://github.com/informaticawerktuigen/klaarzetten-werkomgeving).
+
 * Clone je persoonlijke repository
 
 ```PowerShell
-[ubuntu-shell]$ git clone  https://github.com/besturingssystemen-2021-2022/os-interfaces-<GitHubUsername>.git
+[ubuntu-shell]$ git clone git@github.com:besturingssystemen-2021-2022/os-interfaces-<GitHubUsername>.git
 ```
 
 * Verifieer dat je repository correct gecloned is door `make qemu` uit te voeren.
