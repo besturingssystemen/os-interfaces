@@ -12,6 +12,7 @@ In deze oefenzitting leren jullie het besturingssysteem xv6 kennen.
 - [Library functie toevoegen](#library-functie-toevoegen)
 - [Zelfreflecterend proces](#zelfreflecterend-proces)
 - [Communicerende processen](#communicerende-processen)
+  - [Testen](#testen)
   - [Indienen](#indienen)
 
 # Voorbereiding
@@ -29,20 +30,20 @@ De submissie van de permanente evaluatie zal gebeuren via GitHub classroom.
 Jullie krijgen hiervoor een kopie van de xv6 repository.
 Hierin kunnen jullie met `git` zelf wijzigingen toevoegen en committen.
 
-* Klik op [deze link](https://classroom.github.com/a/uaBpI1Zz) om een persoonlijke repository aan te maken.
+* Klik op [deze link](https://classroom.github.com/a/dO_SIWTY) om een persoonlijke repository aan te maken.
 
 Wanneer je een e-mail krijg van GitHub dat je repository klaar is, moet je deze clonen naar je eigen machine. Dit kan enkele minuten duren.
 
 * Clone je persoonlijke repository
 
 ```shell
-[ubuntu-shell]$ git clone https://github.com/besturingssystemen/xv6-permanente-evaluatie-<GitHubUsername>.git
+[ubuntu-shell]$ git clone  https://github.com/besturingssystemen-2021-2022/os-interfaces-<GitHubUsername>.git
 ```
 
 * Verifieer dat je repository correct gecloned is door `make qemu` uit te voeren.
 
 ```shell
-[ubuntu-shell]$ cd xv6-permanente-evaluatie-<GitHubUsername>
+[ubuntu-shell]$ cd os-interfaces-<GitHubUsername>
 [ubuntu-shell]$ make qemu
 ```
 
@@ -228,6 +229,8 @@ Implementeer nu de `puts` functie in `user/puts.c`.
 Het is de bedoeling om enkel de `write` system call te gebruiken (gebruik dus zeker *niet* `printf` om `puts` te implementeren).
 Andere library functies de geen system calls veroorzaken (zoals `strlen`) mogen wel gebruikt worden.
 
+> :information_source: Met behulp van een ["system call"](https://en.wikipedia.org/wiki/System_call) kan een user programma een service van het onderliggende besturingssysteem aanvragen. System calls zijn gestandardiseerd in de Portable Operating System Interface (POSIX) standaard. Tijdens het programmeren van user programma's, kan je de verwachte argumenten en return waarden voor een system call opvragen via het Linux commando `man` (sectie 2), bijvoorbeeld [`man 2 write`](https://linux.die.net/man/2/write). Let wel, in tegenstelling tot de Linux kernel, is xv6 een educationeel klein besturingssysteem dat expliciet **niet** bedoeld is om de volledige POSIX standaard te implementeren. Gebruik de Linux `man` pages dus vooral als leidraad, maar verwacht niet dat xv6 alle system calls of randgevallen steeds zal implementeren!
+
 # Zelfreflecterend proces
 
 Voeg nu zelf een userspace programma toe genaamd `introspection.c`.
@@ -275,7 +278,13 @@ Voeg daarna een functie toe die de waarden in `struct memlayout` afprint en verg
 
 # Communicerende processen
 
-We weten nu hoe we user space programma's kunnen toevoegen aan xv6. Als laatste deel van deze oefenzitting en als *permanente evaluatie* is het de bedoeling dat je het programma `introspection.c` uitbreidt.
+We weten nu hoe we user space programma's kunnen toevoegen aan xv6.
+Als laatste deel van deze oefenzitting en als *permanente evaluatie* is het de bedoeling dat je het programma `introspection.c` uitbreidt _in een nieuw bestand_ genaamd `evaluation.c`.
+Maak dus eerst een kopie:
+```shell
+cp user/introspection.c user/evaluation.c
+```
+en pas de `Makefile` aan om dit nieuwe bestand te compileren.
 
 Het doel van deze oefening is de memory layout van een parent process te vergelijken met dat van een child process.
 Naast informatie over de memory layout van de processen, zijn we ook geïnteresseerd in de *waarden* op deze memory locations.
@@ -287,7 +296,7 @@ Je programma zal de volgende stappen moeten uitvoeren:
 1. `fork` een nieuw process en zorg dat er een `pipe` gedeeld wordt tussen parent en child;
 1. In het child process:
     1. Initialiseer een `struct memlayout` op dezelfde manier als in de vorige oefening.
-       Je kan hiervoor de stack en data variabelen hergebruiken maar maak wel een nieuwe heap allocatie aan;
+       Je moet hiervoor de stack en data variabelen hergebruiken maar maak wel een nieuwe heap allocatie aan;
     1. Zorg ervoor dat alle gealloceerde variabelen geïnitialiseerd zijn (gebruik een *andere waarde* dan in het parent process);
     1. Kopieer de waarden in een `struct memvalues` (zie hieronder);
     1. Zend eerst de `struct memlayout` en dan de `struct memvalues` naar de parent via de pipe;
@@ -316,14 +325,27 @@ void print_mem(const char* who, struct memlayout* layout, struct memvalues* valu
 Denk voor je begint aan de implementatie na over wat de output van je programma zal zijn.
 Probeer voor jezelf te voorspellen wat de relatie gaat zijn tussen adressen en waarden van variabelen in parent en child processen.
 
+## Testen
+
+We hebben een paar simpele testen gegeven die jullie kunnen gebruiken om te verifiëren dat er geen grote fouten gemaakt zijn.
+Je kan deze uitvoeren via het volgende commando:
+```shell
+make test
+```
+
+Let wel: we kijken jullie code ook nog handmatig na en het feit dat de testen slagen, wilt niet zeggen dat je een perfecte score zult halen!.
+
 ## Indienen
 
 Dit deel van de opgave moet ingediend worden en telt mee voor de permanente evaluatie van de oefeningen.
-* Commit en push het bestand `introspection.c` naar je repository
+* Commit en push het bestand `evaluation.c` naar je repository
 ```shell
-[ubuntu-shell]$ git add introspection.c
+[ubuntu-shell]$ git add user/evaluation.c # Voeg ook andere aangepaste bestanden toe die nodig zijn
 [ubuntu-shell]$ git commit -m "Added introspection program"
 [ubuntu-shell]$ git push
 ```
 
 > :bulb: Controleer op de webpagina van je repository of het bestand correct gecommit is.
+
+> :bulb: De testen worden automatisch uitgevoerd op GitHub wanneer je nieuwe code pusht.
+> Verifieer dat alles werkt door naar de "Actions" tab te gaan.
