@@ -1,3 +1,5 @@
+# :warning: **Deze repo is deprecated! Voortaan staan oefenzittingen op de [website](https://besturingssystemen.github.io/oefeningen/os-interfaces/)**
+
 In deze oefenzitting leren jullie het besturingssysteem xv6 kennen.
 
 - [Voorbereiding](#voorbereiding)
